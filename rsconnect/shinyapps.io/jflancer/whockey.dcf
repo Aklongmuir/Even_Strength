@@ -1,0 +1,12 @@
+name: whockey
+title: whockey
+username:
+account: jflancer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 402800
+bundleId: 1542957
+url: https://jflancer.shinyapps.io/whockey/
+when: 1534702324.09805
+asMultiple: FALSE
+asStatic: FALSE

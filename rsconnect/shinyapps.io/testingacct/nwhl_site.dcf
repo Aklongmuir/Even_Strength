@@ -1,0 +1,13 @@
+name: nwhl_site
+title: nwhl_site
+username:
+account: testingacct
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 411018
+bundleId: 1582678
+url: https://testingacct.shinyapps.io/nwhl_site/
+when: 1536780403.71115
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData

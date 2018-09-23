@@ -1,0 +1,13 @@
+name: nwhl_site
+title: nwhl_site
+username:
+account: jflancer
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 404615
+bundleId: 1547602
+url: https://jflancer.shinyapps.io/nwhl_site/
+when: 1534894199.13335
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData
