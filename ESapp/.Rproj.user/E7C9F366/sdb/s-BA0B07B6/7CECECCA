@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\"library(dplyr)\nlibrary(shiny)\nlibrary(ggplot2)\nlibrary(reshape2)\nlibrary(DT)\nlibrary(XML)\nlibrary(RCurl)\n###########library(rvest) ---- consider for space\n\n\nsource(\"RinkFunction.R\")\n\n#https://shiny.rstudio.com/articles/pool-dplyr.html\n\nseasons <- data.frame(\n  id = c(\"407749\", \"327125\", \"327151\"),\n  Season = c(\"2017\", \"2016\", \"2015\"),\n  otherid = c(3422136, 2758654, 2758856),\n  stringsAsFactors = F\n)\n\npbp_data <- \n  read.csv(\"data/nwhl_pbp_all.csv\", stringsAsFactors = F)\nplayer_data <-\n  read.csv(\"data/nwhl_games_all.csv\", stringsAsFactors = F)\nroster_data <- \n  read.csv(\"data/rostersall.csv\", stringsAsFactors = F)\npointshare_data <-\n  read.csv(\"data/pointshares.csv\", stringsAsFactors = F) %>% rename(Pos = position)\nteam_data <-\n  read.csv(\"data/nwhl_team_games_all.csv\", stringsAsFactors = F)\ntoi_data <-\n  read.csv(\"data/eTOI.csv\", stringsAsFactors = F)\n\ntoi_data$eTOI <- round(toi_data$eTOI)\n\ndates <- pbp_data %>%\n  group_by(game_id, home_team, away_team) %>%\n  summarise(game_date = first(game_date))\n\ndate_parse <-\n  data.frame(matrix(unlist(strsplit(\n    dates$game_date, \"-\"\n  )), ncol = 3, byrow = T))\ndate_order <- order(date_parse$X1, date_parse$X2, date_parse$X3)\n\ndates <- dates[date_order,]\n\ngame_codes <-\n  paste(dates$game_date, dates$home_team, dates$away_team)\n\nroster_data$Player <-\n  paste(roster_data$first_name, roster_data$last_name)\n\nplayer_data <- player_data %>%\n  mutate(game_id = as.character(game_id)) %>%\n  rename(\n    'Game.ID' = game_id,\n    Date = game_date,\n    Home = home_team,\n    Away = away_team,\n    Position = position\n  ) %>%\n  mutate(GF. = round(GF., 2),\n         Position = ifelse(Position %in% c(\"G\", \"D\"), Position, \"F\")) %>%\n  mutate_if(is.numeric, round, 2)\n\nrink <- fun.draw_rink() + coord_fixed() +\n  xlim(20, 100) +\n  ylim(-43, 43) +\n  annotate(\n    \"segment\",\n    x = 20,\n    xend = 89,\n    y = 42.5,\n    yend = 42.5\n  ) +\n  annotate(\n    \"segment\",\n    x = 20,\n    xend = 89,\n    y = -42.5,\n    yend = -42.5\n  )\n\nordering1 <- strsplit(unique(pbp_data$event_player_1[which(pbp_data$event_type %in% c(\"Shot\",\"Goal\"))]), \" \")\nordering1 <-\n  lapply(ordering1, function(x) {\n    a = unlist(x)\n    a[nchar(a) > 1]\n  })\nordering1 <- order(sapply(ordering1, function(x)\n  x[2]))\n\nordering <- strsplit(unique(player_data$Player), \" \")\nordering <-\n  lapply(ordering, function(x) {\n    a = unlist(x)\n    a[nchar(a) > 1]\n  })\nordering <- order(sapply(ordering, function(x)\n  x[2]))\n\nplayer_names <- unique(pbp_data$event_player_1[which(pbp_data$event_type %in% c(\"Shot\",\"Goal\"))])[ordering1]\nall_players <- unique(player_data$Player)[ordering]\nteam_names <- unique(pbp_data$event_team)\n\na <- as.data.frame(matrix(\n  c(\"Goal\", NA, NA,\n    \"Shot\", NA, NA),\n  ncol = 3,\n  byrow = T\n),\nstringsAsFactors = F)\ncolnames(a) <- c(\"event_type\", \"x_coord_1\", \"y_coord_1\")\n\npbp_data <- pbp_data %>%\n  mutate(state = ifelse(\n    event_team == home_team,\n    paste(home_skaters, \"v\", away_skaters, sep = ''),\n    paste(away_skaters, \"v\", home_skaters, sep = '')\n  ))\nstates <- unique(pbp_data$state)\nall_positions <- unique(player_data$Position)\n\nstandardize <- function(x) {\n  x <- as.numeric(x)\n  y <- rank(x) / length(x)\n}",
+    "created" : 1537657108859.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1434259182",
+    "id" : "7CECECCA",
+    "lastKnownWriteTime" : 1536744098,
+    "last_content_update" : 1537657113401,
+    "path" : "~/Downloads/ESapp- V1/global.R",
+    "project_path" : "global.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
