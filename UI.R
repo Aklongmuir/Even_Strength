@@ -26,6 +26,7 @@ fluidPage(theme = shinytheme("simplex"),
                   <br>  
                   <br>This is still a work in progress, so please contact @even-strength on Twitter if 
                   <br>you find any problems or have any suggestions. 
+                  <br>
                   <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
                   "
                )
