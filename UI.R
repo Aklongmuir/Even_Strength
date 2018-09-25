@@ -1,6 +1,6 @@
 library(shinythemes)
 
-fluidPage(theme = shinytheme("simplex"),
+fluidPage(theme = shinytheme("paper"),
           (img(
             src = "ESlogo.png",
             height = 70,
