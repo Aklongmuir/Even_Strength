@@ -1,19 +1,19 @@
 library(shinythemes)
 
 fluidPage(theme = shinytheme("simplex"),
-          #(img(
-          #  src = "ESlogo.png",
-           # height = 70,
-          #  align = "top"
-         # )),
+          (img(
+            src = "ESlogo.png",
+            height = 70,
+            align = "top"
+          )),
   navbarPage(
   
-    title = #(""),
-      ( (img(
-            src = "EStinylogo.png",
-            height = 20,
-            align = "top"
-          ))),
+    title = ("Even-Strength"),
+    #  ( (img(
+        #    src = "EStinylogo.png",
+         #   height = 20,
+         #   align = "top"
+         # ))),
     id = "nav",
     tabPanel("Home",
              h2("Welcome to Even-Strength"),
@@ -24,7 +24,7 @@ fluidPage(theme = shinytheme("simplex"),
                   <br> On this site, you'll be able to find player and team data, as well as charts
                   <br> and tools for easy analysis. 
                   <br>  
-                  <br>This is still a work in progress, so please contact @even-strength on Twitter if 
+                  <br>This is still a work in progress, so please contact <a href = "www.twitter.com/even_strength" >even_strength</a> on Twitter if 
                   <br>you find any problems or have any suggestions. 
                   <br>
                   <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
