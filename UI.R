@@ -24,7 +24,7 @@ fluidPage(theme = shinytheme("simplex"),
                   <br> On this site, you'll be able to find player and team data, as well as charts
                   <br> and tools for easy analysis. 
                   <br>  
-                  <br>This is still a work in progress, so please contact <a href = "www.twitter.com/even_strength" >even_strength</a> on Twitter if 
+                  <br>This is still a work in progress, so please contact @even_strength on Twitter if 
                   <br>you find any problems or have any suggestions. 
                   <br>
                   <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
