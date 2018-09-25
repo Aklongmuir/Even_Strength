@@ -1,27 +1,33 @@
 library(shinythemes)
 
-fluidPage(
-  div(img(
-    src = "banner.png",
-    height = 100,
-    align = "center"
-  )),
-  theme = shinytheme("paper"),
+fluidPage(theme = shinytheme("simplex"),
+          #(img(
+          #  src = "ESlogo.png",
+           # height = 70,
+          #  align = "top"
+         # )),
   navbarPage(
-    "     ",
+  
+    title = #(""),
+      ( (img(
+            src = "EStinylogo.png",
+            height = 20,
+            align = "top"
+          ))),
     id = "nav",
     tabPanel("Home",
              h2("Welcome to Even-Strength"),
              h6(
                HTML(
                  "<br>Welcome to Even-Strength!<br>
-                 <br> Our goal is to provide to fans with an accessible platform to navigate NWHL stats.
-                 <br> On this site, you'll be able to find player and team data, as well as charts
-                 <br> and tools for easy analysis. This is still a work in progress, so please
-                 <br> contact @even-strength on Twitter if you find any problems or have any
-                 <br> suggestions. References and source information can be found in the <i>Sources</i>
-                 <br> tab under <i>More</i>.
-                 "
+                  <br> Our goal is to provide to fans with an accessible platform to navigate NWHL stats.
+                  <br> On this site, you'll be able to find player and team data, as well as charts
+                  <br> and tools for easy analysis. 
+                  <br>  
+                  <br>This is still a work in progress, so please contact @even-strength on Twitter if 
+                  <br>you find any problems or have any suggestions. 
+                  <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
+                  "
                )
                ),
              h6(HTML(
