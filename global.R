@@ -13,9 +13,9 @@ source("RinkFunction.R")
 #https://shiny.rstudio.com/articles/pool-dplyr.html
 
 seasons <- data.frame(
-  id = c("407749", "327125", "327151"),
-  Season = c("2017", "2016", "2015"),
-  otherid = c(3422136, 2758654, 2758856),
+  id = c("512423","407749", "327125", "327151"),
+  Season = c("2018","2017", "2016", "2015"),
+  otherid = c(4170045,3422136, 2758654, 2758856),
   stringsAsFactors = F
 )
 
@@ -83,15 +83,6 @@ rink <- fun.draw_rink() + coord_fixed() +
     yend = -42.5
   )
 
-ordering1 <- strsplit(unique(pbp_data$event_player_1[which(pbp_data$event_type %in% c("Shot","Goal"))]), " ")
-ordering1 <-
-  lapply(ordering1, function(x) {
-    a = unlist(x)
-    a[nchar(a) > 1]
-  })
-ordering1 <- order(sapply(ordering1, function(x)
-  x[2]))
-
 ordering <- strsplit(unique(player_data$Player), " ")
 ordering <-
   lapply(ordering, function(x) {
@@ -101,9 +92,23 @@ ordering <-
 ordering <- order(sapply(ordering, function(x)
   x[2]))
 
-player_names <- unique(pbp_data$event_player_1[which(pbp_data$event_type %in% c("Shot","Goal"))])[ordering1]
 all_players <- unique(player_data$Player)[ordering]
 team_names <- unique(pbp_data$event_team)
+
+pbp_playernames <- pbp_data$event_player_1
+players <- gsub("\\s+", " ", pbp_playernames)
+
+pbp_data$event_player_1 <- players
+
+last_name <-
+  unlist(lapply(
+    strsplit(players, " "),
+    FUN = function(x) {
+      x[2]
+    }
+  ))
+
+player_names <- players[order(last_name)]
 
 a <- as.data.frame(matrix(
   c("Goal", NA, NA,

@@ -109,7 +109,9 @@ function(input, output, session) {
                       } else{
                         aggregate_option
                       }
-                    new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
+                    if(input$aggregate != "Game"){
+                      new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
+                    }
                     return(new_data)
                   })
   output$gameStats <- renderDataTable({
@@ -638,10 +640,16 @@ function(input, output, session) {
                   ignoreNULL = F,
                   {
                     selected_states <-
-                      if (input$state_sc == "All") {
+                      if (input$state_sc == "ALL") {
                         states
-                      } else{
-                        input$state_sc
+                      } else if(input$state_sc == "EVEN"){
+                        c("5v5","6v6","4v4","3v3")
+                      } else if(input$state_sc == "5v5"){
+                        "5v5"
+                      } else if(input$state_sc == "PP"){
+                        c("5v4","5v3","4v3","6v5","6v4","6v3")
+                      } else if(input$state_sc == "PK"){
+                        c("4v5","3v5","3v4","5v6","4v6","3v6")
                       }
                     selected_team <-
                       if (input$team_sc == "All") {
@@ -919,7 +927,7 @@ function(input, output, session) {
   
   #Standings Page
   output$standing <- renderDataTable({
-    season = input$season_standings
+    season <- input$season_standings
     seasonid <- seasons$id[which(seasons$Season == season)]
     otherid <- seasons$otherid[which(seasons$Season == season)]
     url <-

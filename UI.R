@@ -18,7 +18,7 @@ fluidPage(
                  <br> Our goal is to provide to fans with an accessible platform to navigate NWHL stats.
                  <br> On this site, you'll be able to find player and team data, as well as charts
                  <br> and tools for easy analysis. This is still a work in progress, so please
-                 <br> contact @jakef1873 on Twitter if you find any problems or have any
+                 <br> contact @even-strength on Twitter if you find any problems or have any
                  <br> suggestions. References and source information can be found in the <i>Sources</i>
                  <br> tab under <i>More</i>.
                  "
@@ -316,8 +316,8 @@ fluidPage(
             selectizeInput(
               "state_sc",
               "Strength State",
-              choices = c("All",states),
-              selected = "All",
+              choices = c("ALL","EVEN","5v5","PP","PK"),
+              selected = "ALL",
               multiple = T
             )
           ),
@@ -387,8 +387,8 @@ fluidPage(
                  selectInput(
                    "season_standings",
                    "Season",
-                   choices = min(player_data$Season):max(player_data$Season),
-                   selected = 2017
+                   choices = min(player_data$Season):2018,
+                   selected = 2018
                  )
                )),
       dataTableOutput("standing")
