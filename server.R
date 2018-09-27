@@ -477,6 +477,7 @@ function(input, output, session) {
                     
                     b <- if (input$pergame_ps == "per Game") {
                       a %>%
+                        mutate(eTOI = as.numeric(eTOI)) %>%
                         mutate_if(is.numeric, funs(round(. / as.numeric(GP), 2)))
                     } else if (input$pergame_ps == "per 60") {
                       a %>%
@@ -927,7 +928,7 @@ function(input, output, session) {
   
   #Standings Page
   output$standing <- renderDataTable({
-    season <- input$season_standings
+    season <- substr(as.character(input$season_standings), 1,4)
     seasonid <- seasons$id[which(seasons$Season == season)]
     otherid <- seasons$otherid[which(seasons$Season == season)]
     url <-

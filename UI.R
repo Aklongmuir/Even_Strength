@@ -68,7 +68,7 @@ fluidPage(theme = shinytheme("paper"),
               min = min(player_data$Season),
               max = max(player_data$Season),
               sep = "",
-              step = 1,
+              step = 10001,
               value = c(min(player_data$Season), max(player_data$Season))
             )
           ),
@@ -138,7 +138,7 @@ fluidPage(theme = shinytheme("paper"),
                        "season_leader",
                        "Choose Season",
                        value = c(min(player_data$Season),  max(player_data$Season)),
-                       step = 1,
+                       step = 10001,
                        sep = "",
                        min = min(player_data$Season),
                        max = max(player_data$Season)
@@ -165,8 +165,8 @@ fluidPage(theme = shinytheme("paper"),
             selectInput(
               "season_profile",
               "Select Season",
-              choices = min(player_data$Season):max(player_data$Season),
-              selected = 2017
+              choices = seq(min(player_data$Season),max(player_data$Season), by = 10001),
+              selected = 20172018
             ),
             
             checkboxInput("isGP", "Per Game", value = F)
@@ -215,7 +215,7 @@ fluidPage(theme = shinytheme("paper"),
               min = min(player_data$Season),
               max = max(player_data$Season),
               sep = "",
-              step = 1,
+              step = 10001,
               value = c(min(player_data$Season), max(player_data$Season))
             )
           ),
@@ -258,7 +258,7 @@ fluidPage(theme = shinytheme("paper"),
               min = min(player_data$Season),
               max = max(player_data$Season),
               sep = "",
-              step = 1,
+              step = 10001,
               value = c(min(player_data$Season), max(player_data$Season))
             )
           ),
@@ -333,11 +333,11 @@ fluidPage(theme = shinytheme("paper"),
             sliderInput(
               "shot_chart_season",
               "Season",
-              min = 2016,
+              min = 20162017,
               max = max(player_data$Season),
-              step = 1,
+              step = 10001,
               sep = "",
-              value = c(2016, max(player_data$Season))
+              value = c(20162017, max(player_data$Season))
             )
           )
         ),
@@ -394,8 +394,8 @@ fluidPage(theme = shinytheme("paper"),
                  selectInput(
                    "season_standings",
                    "Season",
-                   choices = min(player_data$Season):2018,
-                   selected = 2018
+                   choices = seq(min(player_data$Season),20182019, by = 10001),
+                   selected = 20182019
                  )
                )),
       dataTableOutput("standing")

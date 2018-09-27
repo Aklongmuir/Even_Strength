@@ -20,17 +20,23 @@ seasons <- data.frame(
 )
 
 pbp_data <- 
-  read.csv("data/nwhl_pbp_all.csv", stringsAsFactors = F)
+  read.csv("data/nwhl_pbp_all.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season*10000 + Season + 1)
 player_data <-
-  read.csv("data/nwhl_games_all.csv", stringsAsFactors = F)
+  read.csv("data/nwhl_games_all.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season*10000 + Season + 1)
 roster_data <- 
-  read.csv("data/rostersall.csv", stringsAsFactors = F)
+  read.csv("data/rostersall.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season*10000 + Season + 1)
 pointshare_data <-
-  read.csv("data/pointshares.csv", stringsAsFactors = F) %>% rename(Pos = position)
+  read.csv("data/pointshares.csv", stringsAsFactors = F) %>% rename(Pos = position) %>%
+  mutate(Season = Season*10000 + Season + 1)
 team_data <-
-  read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F)
+  read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season*10000 + Season + 1)
 toi_data <-
-  read.csv("data/eTOI.csv", stringsAsFactors = F)
+  read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season*10000 + Season + 1)
 
 toi_data$eTOI <- round(toi_data$eTOI)
 
