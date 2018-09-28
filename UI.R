@@ -1,6 +1,7 @@
 library(shinythemes)
 
 fluidPage(theme = shinytheme("paper"),
+          tags$head(tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")),
           (img(
             src = "ESlogo.png",
             height = 70,
@@ -9,6 +10,7 @@ fluidPage(theme = shinytheme("paper"),
   navbarPage(
   
     title = ("Even-Strength"),
+
     #  ( (img(
         #    src = "EStinylogo.png",
          #   height = 20,
