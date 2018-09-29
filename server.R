@@ -62,21 +62,24 @@ function(input, output, session) {
                       rename(Plus = eGF,
                              Minus = eGA) %>%
                       mutate('Sh%' = round(G / SOG, 2)) %>%
-                      select(Player:TO, 'Sh%', SV, GA)
+                      select(Player:TO, 'Sh%', SV, GA) %>%
+                      rename("GF." = "GF%")
                     
                     new_data <-
                       if (input$pergame == "per Game" &
                           input$aggregate == "Season") {
                         aggregate_option %>%
                           mutate(Season = as.character(Season),
-                                 GP = as.character(GP)) %>%
+                                 GP = as.character(GP),
+                                 GF. = as.character(GF.)) %>%
                           mutate_if(is.numeric, funs(round(. / as.numeric(GP), 2))) %>%
                           mutate(Season = as.numeric(Season),
                                  'Sh%' = round(G / SOG, 2))
                       } else if (input$pergame == "per Game" &
                                  input$aggregate == "Career") {
                         aggregate_option %>%
-                          mutate(GP = as.character(GP)) %>%
+                          mutate(GP = as.character(GP),
+                                 GF. = as.character(GF.)) %>%
                           mutate_if(is.numeric, funs(round(. / as.numeric(GP), 2))) %>%
                           mutate('Sh%' = round(G / SOG, 2))
                       } else if (input$pergame == "per 60" &
@@ -86,7 +89,8 @@ function(input, output, session) {
                           mutate(
                             Season = as.character(Season),
                             GP = as.character(GP),
-                            eTOI = as.character(eTOI)
+                            eTOI = as.character(eTOI),
+                            GF. = as.character(GF.)
                           ) %>%
                           mutate_if(is.numeric, funs(round((
                             . / as.numeric(eTOI)
@@ -101,7 +105,8 @@ function(input, output, session) {
                         aggregate_option %>%
                           filter(eTOI > 0, Position != "G") %>%
                           mutate(GP = as.character(GP),
-                                 eTOI = as.character(eTOI)) %>%
+                                 eTOI = as.character(eTOI),
+                                 GF. = as.character(GF.)) %>%
                           mutate_if(is.numeric, funs(round((
                             . / as.numeric(eTOI)
                           ) * 60, 2))) %>%
@@ -109,6 +114,7 @@ function(input, output, session) {
                       } else{
                         aggregate_option
                       }
+                    new_data <- rename(new_data, "GF%"= "GF.")
                     if(input$aggregate != "Game"){
                       new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
                     }
