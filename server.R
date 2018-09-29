@@ -1,5 +1,7 @@
 function(input, output, session) {
+  #forcechange
   #Players ----
+  
   # Player Table
   tableData <-
     eventReactive(eventExpr = input$submit_button_player,
