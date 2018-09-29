@@ -1,5 +1,6 @@
 function(input, output, session) {
   #Players ----
+  
   # Player Table
   tableData <-
     eventReactive(eventExpr = input$submit_button_player,
@@ -31,7 +32,7 @@ function(input, output, session) {
                         data1 <- data %>%
                           group_by(Player, Position, Team, Season) %>%
                           summarise_if(is.numeric, sum, na.rm = T) %>%
-                          mutate('GF%' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
+                          mutate('GF.' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
                           left_join(toi_data, by = c("Player", "Team", "Season"))
                         data2 <- data %>%
                           group_by(Player, Position, Team, Season) %>%
@@ -48,7 +49,7 @@ function(input, output, session) {
                           select(-Season) %>%
                           group_by(Player, Position, Team) %>%
                           summarise_if(is.numeric, sum, na.rm = T) %>%
-                          mutate('GF%' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_))
+                          mutate('GF.' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_))
                         data2 <- data %>%
                           group_by(Player, Position, Team) %>%
                           summarise(GP = n())
@@ -59,21 +60,19 @@ function(input, output, session) {
                         select(data, Player:Team, Season, everything())
                       }
                     aggregate_option <- aggregate_option %>%
-                      dplyr::rename("Plus" = "eGF",
-                             "Minus" = "eGA") %>%
+                      rename(Plus = eGF,
+                             Minus = eGA) %>%
                       mutate('Sh%' = round(G / SOG, 2)) %>%
                       select(Player:TO, 'Sh%', SV, GA) %>%
-                      dplyr::rename("GF." = "GF%")
+                      rename("GF." = "GF.")
                     
                     new_data <-
                       if (input$pergame == "per Game" &
                           input$aggregate == "Season") {
                         aggregate_option %>%
-                          mutate(
-                            Season = as.character(Season),
-                            GP = as.character(GP),
-                            GF. = as.character(GF.)
-                          ) %>%
+                          mutate(Season = as.character(Season),
+                                 GP = as.character(GP),
+                                 GF. = as.character(GF.)) %>%
                           mutate_if(is.numeric, funs(round(. / as.numeric(GP), 2))) %>%
                           mutate(Season = as.numeric(Season),
                                  'Sh%' = round(G / SOG, 2))
@@ -116,8 +115,8 @@ function(input, output, session) {
                       } else{
                         aggregate_option
                       }
-                    new_data <- rename(new_data, "GF%" = "GF.")
-                    if (input$aggregate != "Game") {
+                    new_data <- rename(new_data, "GF."= "GF.")
+                    if(input$aggregate != "Game"){
                       new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
                     }
                     return(new_data)
@@ -146,7 +145,7 @@ function(input, output, session) {
         fixedColumns = list(leftColumns = 1),
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'background-color': '#0FD', 'color': '#000'});",
+          "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
           "}"
         )
       ),
@@ -191,7 +190,7 @@ function(input, output, session) {
                       group_by(Player, Position, Team, Season) %>%
                       group_by(GP = n(), add = TRUE) %>%
                       summarise_if(is.numeric, sum, na.rm = T) %>%
-                      mutate('GF%' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
+                      mutate('GF.' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
                       select(Player, Position, Team, Season, PrPTS, G, A1, A2, GP) %>%
                       filter(GP > input$GP_filter) %>%
                       mutate_if(funs(is.numeric(.) &
@@ -244,7 +243,7 @@ function(input, output, session) {
       select(-Season) %>%
       group_by(Player, Position) %>%
       summarise_if(is.numeric, sum, na.rm = T) %>%
-      mutate('GF%' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
+      mutate('GF.' = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
       ungroup()
     test2 <- player_data %>%
       filter(Season == as.numeric(input$season_profile)) %>%
@@ -471,11 +470,9 @@ function(input, output, session) {
                       }
                     
                     a <- pointshare_data %>%
-                      filter(
-                        Team %in% selected_team,
-                        Pos %in% selected_position,
-                        Season %in% min(input$season_ps):max(input$season_ps)
-                      ) %>%
+                      filter(Team %in% selected_team,
+                             Pos %in% selected_position,
+                             Season %in% min(input$season_ps):max(input$season_ps)) %>%
                       left_join(toi_data, by = c("Player", "Team", "Season")) %>%
                       select(-G:-A2) %>%
                       select(Season, Player, Team, Pos, eTOI, everything()) %>%
@@ -483,8 +480,8 @@ function(input, output, session) {
                         Season = as.character(Season),
                         GP = as.character(GP),
                         eTOI = as.character(eTOI)
-                      ) #%>%
-                      #left_join(xg_data, by = c("Player", "Team", "Season"))
+                      ) %>%
+                        left_join(xg_data, by = c("Player","Team","Season"))
                     
                     b <- if (input$pergame_ps == "per Game") {
                       a %>%
@@ -516,7 +513,7 @@ function(input, output, session) {
         )),
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'background-color': '#0FD', 'color': '#000'});",
+          "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
           "}"
         )
       ),
@@ -546,8 +543,8 @@ function(input, output, session) {
                         group_by(Team, Season) %>%
                         summarise_if(is.numeric, sum, na.rm = T) %>%
                         select(-game_id) %>%
-                        dplyr::rename("SF_5v5." = "SF%_5v5",
-                               "SF." = "SF%") %>%
+                        rename("SF_5v5." = "SF%_5v5",
+                               "SF."= "SF%") %>%
                         mutate(
                           SF. = round(SF / (SF + SA), 2),
                           SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
@@ -572,15 +569,15 @@ function(input, output, session) {
                           Sv. = round(1 - GA / SA, 2),
                           PDO = Sh. + Sv.
                         ) %>%
-                        dplyr::rename("SF%_5v5" = "SF_5v5.",
+                        rename("SF%_5v5" = "SF_5v5.",
                                "SF%" = "SF.")
                     } else if (input$team_aggregate == "Aggregate Seasons") {
                       data1 <- team_data %>%
                         group_by(Team) %>%
                         summarise_if(is.numeric, sum, na.rm = T) %>%
                         select(-game_id, -Season) %>%
-                        dplyr::rename("SF_5v5." = "SF%_5v5",
-                               "SF." = "SF%") %>%
+                        rename("SF_5v5." = "SF%_5v5",
+                               "SF."= "SF%") %>%
                         mutate(
                           SF. = round(SF / (SF + SA), 2),
                           SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
@@ -604,7 +601,7 @@ function(input, output, session) {
                           Sv. = round(1 - GA / SA, 2),
                           PDO = Sh. + Sv.
                         ) %>%
-                        dplyr::rename("SF%_5v5" = "SF_5v5.",
+                        rename("SF%_5v5" = "SF_5v5.",
                                "SF%" = "SF.")
                     } else{
                       select(team_data, Season, everything())
@@ -625,7 +622,7 @@ function(input, output, session) {
         #order = list(list(sort_index, 'desc')),
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'background-color': '#0FD', 'color': '#000'});",
+          "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
           "}"
         )
       ),
@@ -661,14 +658,14 @@ function(input, output, session) {
                     selected_states <-
                       if (input$state_sc == "ALL") {
                         states
-                      } else if (input$state_sc == "EVEN") {
-                        c("5v5", "6v6", "4v4", "3v3")
-                      } else if (input$state_sc == "5v5") {
+                      } else if(input$state_sc == "EVEN"){
+                        c("5v5","6v6","4v4","3v3")
+                      } else if(input$state_sc == "5v5"){
                         "5v5"
-                      } else if (input$state_sc == "PP") {
-                        c("5v4", "5v3", "4v3", "6v5", "6v4", "6v3")
-                      } else if (input$state_sc == "PK") {
-                        c("4v5", "3v5", "3v4", "5v6", "4v6", "3v6")
+                      } else if(input$state_sc == "PP"){
+                        c("5v4","5v3","4v3","6v5","6v4","6v3")
+                      } else if(input$state_sc == "PK"){
+                        c("4v5","3v5","3v4","5v6","4v6","3v6")
                       }
                     selected_team <-
                       if (input$team_sc == "All") {
@@ -696,12 +693,13 @@ function(input, output, session) {
                   })
   output$shotChart <- renderPlot({
     if (nrow(shotData()) == 2) {
+      
       options(warn = -1)
       plot <- rink
       options(warn = 0)
     } else{
       shot_count <- shotData() %>% summarise(n())
-      options(warn = -1)
+      options(warn= -1)
       plot <- rink +
         geom_point(
           data = shotData(),
@@ -723,7 +721,7 @@ function(input, output, session) {
           plot.title = element_text(size = 18, hjust = 0.5)
         ) +
         ggtitle(paste(shot_count, "Shots on Goal"))
-      options(warn = 0)
+      options(warn= 0)
     }
     return(plot)
   })
@@ -740,7 +738,7 @@ function(input, output, session) {
         pbp_data,
         Season %in% min(input$shot_chart_season):max(input$shot_chart_season),
         event_team %in% selected_team,
-        event_type %in% c("Shot", "Goal")
+        event_type %in% c("Shot","Goal")
       )$event_player_1
     )
     players <- gsub("\\s+", " ", players[!is.na(players)])
@@ -802,13 +800,9 @@ function(input, output, session) {
         input$team_sc
       }
     
-    seasons <-
-      unique(pbp_data$Season[which(
-        pbp_data$event_player_1 %in% selected_player &
-          pbp_data$event_team %in% selected_team &
-          !is.na(pbp_data$x_coord) &
-          pbp_data$event_type %in% c("Shot", "Goal")
-      )])
+    seasons <- unique(pbp_data$Season[which(pbp_data$event_player_1 %in% selected_player &
+                                              pbp_data$event_team %in% selected_team &
+                                              !is.na(pbp_data$x_coord) & pbp_data$event_type %in% c("Shot","Goal"))])
     updateSliderInput(
       session,
       "shot_chart_season",
@@ -842,8 +836,8 @@ function(input, output, session) {
              event_player_1,
              home_score,
              away_score) %>%
-      dplyr::rename("Event" = "event_type",
-             "Player" = "event_player_1")
+      rename(Event = event_type,
+             Player = event_player_1)
   })
   output$pbpViewer <- renderDataTable({
     datatable(
@@ -861,7 +855,7 @@ function(input, output, session) {
         filter = 'none',
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'background-color': '#0FD', 'color': '#000'});",
+          "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
           "}"
         )
       ),
@@ -917,11 +911,8 @@ function(input, output, session) {
     test <- pbp_flow()
     ggplot(test) +
       geom_step(aes(game_seconds / 60, Shots, color = event_team == home_team)) +
-      geom_point(
-        data = filter(test, isGoal == 1),
-        aes(game_seconds / 60, Shots, color = event_team == home_team),
-        size = 3
-      ) +
+      geom_point(data = filter(test, isGoal == 1),
+                 aes(game_seconds/60, Shots, color = event_team == home_team), size = 3) +
       labs(x = "Minutes", y = "Shots For") +
       scale_color_manual(
         name = "Team",
@@ -935,12 +926,11 @@ function(input, output, session) {
       geom_vline(xintercept = test$game_seconds[which(test$isPenalty == 1 &
                                                         test$event_team == test$home_team)] / 60,
                  color = "skyblue") +
-      ggtitle(paste(
-        first(test$home_team),
-        sum(test$isGoal[which(test$event_team == test$home_team)], na.rm = T),
-        first(test$away_team),
-        sum(test$isGoal[which(test$event_team == test$away_team)], na.rm = T)
-      )) +
+      ggtitle(paste(first(test$home_team), 
+                       sum(test$isGoal[which(test$event_team==test$home_team)], na.rm = T),
+                       first(test$away_team),
+                       sum(test$isGoal[which(test$event_team==test$away_team)], na.rm = T)
+                       )) +
       theme_classic()
   }, height = 400, width = 1000)
   
@@ -948,7 +938,7 @@ function(input, output, session) {
   
   #Standings Page
   output$standing <- renderDataTable({
-    season <- substr(as.character(input$season_standings), 1, 4)
+    season <- substr(as.character(input$season_standings), 1,4)
     seasonid <- seasons$id[which(seasons$Season == season)]
     otherid <- seasons$otherid[which(seasons$Season == season)]
     url <-
@@ -977,7 +967,7 @@ function(input, output, session) {
         filter = 'none',
         initComplete = JS(
           "function(settings, json) {",
-          "$(this.api().table().header()).css({'background-color': '#0FD', 'color': '#000'});",
+          "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
           "}"
         )
       ),
