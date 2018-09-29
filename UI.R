@@ -1,38 +1,41 @@
 library(shinythemes)
-fluidPage(theme = shinytheme("paper"),
-          tags$head(tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")),
-          (img(
-            src = "ESlogo.png",
-            height = 70,
-            align = "top"
-          )),
-  navbarPage(
-  
-    title = ("Even-Strength"),
 
+fluidPage(
+  theme = shinytheme("paper"),
+  tags$head(
+    tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")
+  ),
+  (img(
+    src = "ESlogo.png",
+    height = 70,
+    align = "top"
+  )),
+  navbarPage(
+    title = ("Even-Strength"),
+    
     #  ( (img(
-        #    src = "EStinylogo.png",
-         #   height = 20,
-         #   align = "top"
-         # ))),
+    #    src = "EStinylogo.png",
+    #   height = 20,
+    #   align = "top"
+    # ))),
     id = "nav",
     tabPanel("Home",
              h2("Welcome to Even-Strength"),
              h6(
                HTML(
                  "<br>Welcome to Even-Strength!<br>
-                  <br> Our goal is to provide to fans with an accessible platform to navigate NWHL stats.
-                  <br> On this site, you'll be able to find player and team data, as well as charts
-                  <br> and tools for easy analysis. 
-                  <br>
-                  <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
-                  <br>  
-                  <br>This is still a work in progress, so please contact <a href = 'https://twitter.com/Even_Strength'>@even_strength</a> on Twitter if 
-                  <br>you find any problems or have any suggestions.
-                  <br>
-                  <br> Additionally, we've created a <a href = 'https://www.patreon.com/even_strength'> Patreon Page </a> to help support website/server costs.
-                  <br>
-                  "
+                 <br> Our goal is to provide to fans with an accessible platform to navigate NWHL stats.
+                 <br> On this site, you'll be able to find player and team data, as well as charts
+                 <br> and tools for easy analysis.
+                 <br>
+                 <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
+                 <br>
+                 <br>This is still a work in progress, so please contact <a href = 'https://twitter.com/Even_Strength'>@even_strength</a> on Twitter if
+                 <br>you find any problems or have any suggestions.
+                 <br>
+                 <br> Additionally, we've created a <a href = 'https://www.patreon.com/even_strength'> Patreon Page </a> to help support website/server costs.
+                 <br>
+                 "
                )
                ),
              h6(HTML(
@@ -169,7 +172,7 @@ fluidPage(theme = shinytheme("paper"),
             selectInput(
               "season_profile",
               "Select Season",
-              choices = seq(min(player_data$Season),max(player_data$Season), by = 10001),
+              choices = seq(min(player_data$Season), max(player_data$Season), by = 10001),
               selected = 20172018
             ),
             
@@ -327,7 +330,7 @@ fluidPage(theme = shinytheme("paper"),
             selectizeInput(
               "state_sc",
               "Strength State",
-              choices = c("ALL","EVEN","5v5","PP","PK"),
+              choices = c("ALL", "EVEN", "5v5", "PP", "PK"),
               selected = "ALL",
               multiple = T
             )
@@ -385,7 +388,7 @@ fluidPage(theme = shinytheme("paper"),
         ),
         column(4, h6(
           HTML("vertical line denotes a penalty</br>")
-        ) )),
+        ))),
         plotOutput("shotFlow")
       )
     ),
@@ -398,7 +401,7 @@ fluidPage(theme = shinytheme("paper"),
                  selectInput(
                    "season_standings",
                    "Season",
-                   choices = seq(min(player_data$Season),20182019, by = 10001),
+                   choices = seq(min(player_data$Season), 20182019, by = 10001),
                    selected = 20182019
                  )
                )),
@@ -420,7 +423,7 @@ fluidPage(theme = shinytheme("paper"),
                    <br> xG data via Alyssa Longmuir
                    <br> Game Score via Shawn Ferris adapted from Dom Luszczyszyn
                    <br> Point Shares via Jake Flancer adapted from hockey-reference
-		   <br> Rink code via Prashanth Iyer
+                   <br> Rink code via Prashanth Iyer
                    <br> Additionally, thank you to all that provided help and feedback during the design process
                    "
                  )
