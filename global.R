@@ -29,7 +29,7 @@ roster_data <-
   read.csv("data/rostersall.csv", stringsAsFactors = F) %>%
   mutate(Season = Season*10000 + Season + 1)
 pointshare_data <-
-  read.csv("data/pointshares.csv", stringsAsFactors = F) %>% rename(Pos = position) %>%
+  read.csv("data/advancedstats.csv", stringsAsFactors = F) %>% rename(Pos = position) %>%
   mutate(Season = Season*10000 + Season + 1)
 team_data <-
   read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
