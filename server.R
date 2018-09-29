@@ -496,7 +496,8 @@ function(input, output, session) {
                     } else{
                       a
                     }
-                    b %>% mutate(GP = as.numeric(GP), eTOI = as.numeric(eTOI))
+                    c <- b %>% mutate(GP = as.numeric(GP), eTOI = as.numeric(eTOI))
+                    cbind(c, line)
                   })
   output$pointShares <- renderDataTable({
     datatable(

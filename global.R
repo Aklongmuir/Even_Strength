@@ -32,6 +32,8 @@ pointshare_data <-
   mutate(Season = Season * 10000 + Season + 1,
          ixG = round(xG,2)) %>%
   select(-xG)
+
+line <- pointshare_data$ixG
   
 team_data <-
   read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
