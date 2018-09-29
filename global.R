@@ -28,11 +28,12 @@ roster_data <-
   mutate(Season = Season * 10000 + Season + 1)
 pointshare_data <-
   read.csv("data/advancedstats.csv", stringsAsFactors = F) %>% 
-  dplyr::rename(Pos = position) %>%
+  dplyr::rename("Pos" = "position") %>%
   mutate(Season = Season * 10000 + Season + 1,
          ixG = round(xG,2)) %>%
   select(-xG)
-  
+print(colnames(pointshare_data))
+
 team_data <-
   read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
   mutate(Season = Season * 10000 + Season + 1)
