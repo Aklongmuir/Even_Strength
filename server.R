@@ -468,7 +468,7 @@ function(input, output, session) {
                              Season %in% min(input$season_ps):max(input$season_ps)) %>%
                       left_join(toi_data, by = c("Player", "Team", "Season")) %>%
                       select(-G:-A2) %>%
-                      select(Season, Player, Team, Pos, eTOI, xG, everything()) %>%
+                      select(Season, Player, Team, Pos, eTOI, everything()) %>%
                       mutate(
                         Season = as.character(Season),
                         GP = as.character(GP),
