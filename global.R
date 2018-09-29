@@ -5,6 +5,7 @@ library(reshape2)
 library(DT)
 library(XML)
 library(RCurl)
+
 source("RinkFunction.R")
 
 #https://shiny.rstudio.com/articles/pool-dplyr.html
@@ -34,11 +35,13 @@ team_data <-
 toi_data <-
   read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
   mutate(Season = Season*10000 + Season + 1)
-xg_data <- read.csv("data/NWHLxG.csv", stringsAsFactors = F) %>%
+xg_data <- 
+  read.csv("data/NWHLxG.csv", stringsAsFactors = F) %>%
   mutate(Season = as.character(season*10000 + season + 1),
-        ixG = round(xG,2)) %>%
+         ixG = round(xG,2)) %>%
   select(-season, -Goals,-Difference,-xG) %>%
-  rename(Player = event_player_1,Team = event_team)
+  rename(Player = event_player_1,
+         Team = event_team)
 
 toi_data$eTOI <- round(toi_data$eTOI)
 

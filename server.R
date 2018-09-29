@@ -1,6 +1,5 @@
 function(input, output, session) {
   #Players ----
-  
   # Player Table
   tableData <-
     eventReactive(eventExpr = input$submit_button_player,
@@ -480,8 +479,8 @@ function(input, output, session) {
                         Season = as.character(Season),
                         GP = as.character(GP),
                         eTOI = as.character(eTOI)
-                      )# %>%
-                     # left_join(xg_data, by = c("Player","Team","Season"))
+                      ) %>%
+                      left_join(xg_data, by = c("Player","Team","Season"))
                     
                     b <- if (input$pergame_ps == "per Game") {
                       a %>%
