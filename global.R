@@ -37,8 +37,10 @@ team_data <-
 toi_data <-
   read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
   mutate(Season = Season*10000 + Season + 1)
+xg_data <- read_csv("data/NWHLxG.csv", 
+  col_types = cols(Season = col_character()))
 
-toi_data$eTOI <- round(toi_data$eTOI)
+toi_data$eTOI <- round(toi_data$eTOI) 
 
 dates <- pbp_data %>%
   group_by(game_id, home_team, away_team) %>%
