@@ -34,7 +34,7 @@ team_data <-
 toi_data <-
   read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
   mutate(Season = Season*10000 + Season + 1)
-xg_data <- read.csv("data/NWHLxG.csv", stringsAsFactors = F)# %>%
+#xg_data <- read.csv("data/NWHLxG.csv", stringsAsFactors = F)# %>%
  # mutate(Season = as.character(season*10000 + season + 1),
     #  ixG = round(xG,2)) %>%
 # select(-season, -Goals,-Difference,-xG) %>%
@@ -141,5 +141,5 @@ standardize <- function(x) {
   y <- rank(x) / length(x)
 }
 
-player_data <- rename(player_data, "GF%" = "GF.")
-team_data <-rename(team_data, "SF%" = "SF.","SF%_5v5" =  "SF_5v5.")
+#player_data <- rename(player_data, "GF%" = "GF.")
+#team_data <-rename(team_data, "SF%" = "SF.","SF%_5v5" =  "SF_5v5.")
