@@ -1,5 +1,4 @@
 function(input, output, session) {
-  #forcechange
   #Players ----
   
   # Player Table
