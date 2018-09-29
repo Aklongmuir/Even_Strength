@@ -5,8 +5,6 @@ library(reshape2)
 library(DT)
 library(XML)
 library(RCurl)
-###########library(rvest) ---- consider for space
-
 
 source("RinkFunction.R")
 
@@ -37,6 +35,13 @@ team_data <-
 toi_data <-
   read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
   mutate(Season = Season*10000 + Season + 1)
+xg_data <- 
+  read.csv("data/NWHLxG.csv", stringsAsFactors = F) %>%
+  mutate(Season = as.character(season*10000 + season + 1),
+         ixG = round(xG,2)) %>%
+  select(-season, -Goals,-Difference,-xG) %>%
+  rename(Player = event_player_1,
+         Team = event_team)
 
 toi_data$eTOI <- round(toi_data$eTOI)
 
@@ -138,3 +143,6 @@ standardize <- function(x) {
   x <- as.numeric(x)
   y <- rank(x) / length(x)
 }
+
+player_data <- rename(player_data, "GF%" = GF.)
+team_data <-rename(team_data, "SF%" = SF.,"SF%_5v5" =  SF_5v5.)

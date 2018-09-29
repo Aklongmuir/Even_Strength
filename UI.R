@@ -25,11 +25,14 @@ fluidPage(theme = shinytheme("paper"),
                   <br> Our goal is to provide to fans with an accessible platform to navigate NWHL stats.
                   <br> On this site, you'll be able to find player and team data, as well as charts
                   <br> and tools for easy analysis. 
-                  <br>  
-                  <br>This is still a work in progress, so please contact @even_strength on Twitter if 
-                  <br>you find any problems or have any suggestions. 
                   <br>
                   <br> References and source information can be found in the <i>Sources</i> tab under <i>More</i>.
+                  <br>  
+                  <br>This is still a work in progress, so please contact <a href = 'https://twitter.com/Even_Strength'>@even_strength</a> on Twitter if 
+                  <br>you find any problems or have any suggestions.
+                  <br>
+                  <br> Additionally, we've created a <a href = 'https://www.patreon.com/even_strength'> Patreon Page </a> to help support website/server costs.
+                  <br>
                   "
                )
                ),
@@ -151,7 +154,7 @@ fluidPage(theme = shinytheme("paper"),
                    ),
                    style = "width: 75%"
                  ),
-                 mainPanel(plotOutput("leagueChart", width = "75%"))
+                 mainPanel(plotOutput("leagueChart"))
                )),
       tabPanel(
         "Player Profile",
@@ -187,7 +190,7 @@ fluidPage(theme = shinytheme("paper"),
                div(htmlOutput("tableauComp")),
                align = "center"),
       tabPanel(
-        "Point Shares",
+        "Advanced Stats",
         fluidRow(
           column(
             2,
@@ -382,8 +385,8 @@ fluidPage(theme = shinytheme("paper"),
           )
         ),
         column(4, h6(
-          HTML("Dark Vertical Line: Goal<br>Light Vertical Line: Penalty</br>")
-        ))),
+          HTML("vertical line denotes a penalty</br>")
+        ) )),
         plotOutput("shotFlow")
       )
     ),
@@ -409,13 +412,16 @@ fluidPage(theme = shinytheme("paper"),
                h2("Sources"),
                h6(
                  HTML(
-                   "Play by play data acquired from the NWHL collected via <a href='https://github.com/jflancer/nwhl-scraper'>NWHL Scraper</a> by Jake Flancer
+                   "Play by play data acquired from the NWHL (nwhl.zone) collected via <a href='https://github.com/jflancer/nwhl-scraper'>NWHL Scraper</a> by Jake Flancer
                    <br> All images, player data, and standings data from <a href = 'https://www.nwhl.zone/'> nwhl.zone </a>
                    <br> Website Created and Designed by Jake Flancer
                    <br> Server and Backend Managed by Alyssa Longmuir
                    <br> Tableau creations by Alyssa Longmuir and Carlie (@quarkyhockey)
                    <br> eTOI data via CJ Turtoro
-                   <br> Game Score created by Shawn Ferris adapted from Dom Luszczyszyn and Point Shares created by Jake Flancer adapted from hockey-reference
+                   <br> xG data via Alyssa Longmuir
+                   <br> Game Score via Shawn Ferris adapted from Dom Luszczyszyn
+                   <br> Point Shares via Jake Flancer adapted from hockey-reference
+		   <br> Rink code via Prashanth Iyer
                    <br> Additionally, thank you to all that provided help and feedback during the design process
                    "
                  )
@@ -430,12 +436,12 @@ fluidPage(theme = shinytheme("paper"),
         h6("PTS- Points = G + A1 + A2 | PrPTS- Primary Points"),
         h6("SOG- Shots on Goal | FOW/FOL- Face-off Win/Loss"),
         h6(
-          "PIM- Penalty Minute | Blk- Blocks | TO- Turnovers | Sh%/Sh.- Shooting Percentage"
+          "PIM- Penalty Minute | Blk- Blocks | TO- Turnovers | Sh% or Sh.- Shooting Percentage"
         ),
         h6("SV- Saves | GA- Goals Allowed | Sv.- Save Percentage"),
-        h6("PDO- Sh% + Sv% | GF/GA + SF/SA- Goals/Shots For/Against"),
+        h6("PDO- Sh% + Sv% | GF/GA + SF/SA- Goals/Shots + For/Against"),
         h6(
-          "Plus/Minus- Conventional Plus/Minus Calculation | GF.- GF/(GF+GA)"
+          "Plus/Minus- Conventional Plus/Minus Calculation | GF%- GF/(GF+GA)"
         ),
         h6("PP/pp + Sh/sh + 5v5 - Denotes a powerplay / shorthanded / 5v5 event"),
         h6(
@@ -446,6 +452,12 @@ fluidPage(theme = shinytheme("paper"),
         ),
         h6(
           "OPS- Offensive Point Shares- measures offensive production | DPS- Defensive Point Shares- measures defensive production"
+        ),
+        h6(
+          "ixG- Number of goals a player is expected to score given the quality of their shot attempts, created by Alyssa Longmuir"
+        ),
+        h6(
+          "eTOI- A player's expected TOI given their usage relative to their team, created by CJ Turturo"
         )
       )
                  )
