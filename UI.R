@@ -1,5 +1,4 @@
 library(shinythemes)
-
 fluidPage(theme = shinytheme("paper"),
           tags$head(tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")),
           (img(
