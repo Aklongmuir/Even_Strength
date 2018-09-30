@@ -817,7 +817,7 @@ function(input, output, session) {
       "Season",
       min = min(seasons),
       max = max(seasons),
-      step = 1,
+      step = 10001,
       value = c(min(seasons), max(seasons))
     )
   })
