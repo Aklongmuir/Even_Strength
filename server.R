@@ -63,7 +63,7 @@ function(input, output, session) {
                              "Minus" = "eGA") %>%
                       mutate('Sh%' = round(G / SOG, 2)) %>%
                       select(Player:TO, 'Sh%', SV, GA)# %>%
-                      #dplyr::rename("GF." = "GF%")
+                      dplyr::rename("GF." = "GF%")
                     
                     new_data <-
                       if (input$pergame == "per Game" &
@@ -116,7 +116,7 @@ function(input, output, session) {
                       } else{
                         aggregate_option
                       }
-                    #new_data <- rename(new_data, "GF%" = "GF.")
+                    new_data <- rename(new_data, "GF%" = "GF.")
                     if (input$aggregate != "Game") {
                       new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
                     }
@@ -546,8 +546,8 @@ function(input, output, session) {
                         group_by(Team, Season) %>%
                         summarise_if(is.numeric, sum, na.rm = T) %>%
                         select(-game_id) %>%
-                        #dplyr::rename("SF_5v5." = "SF%_5v5",
-                        #       "SF." = "SF%") %>%
+                        dplyr::rename("SF_5v5." = "SF%_5v5",
+                               "SF." = "SF%") %>%
                         mutate(
                           SF. = round(SF / (SF + SA), 2),
                           SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
@@ -571,16 +571,16 @@ function(input, output, session) {
                           Sh. = round(GF / SF, 2),
                           Sv. = round(1 - GA / SA, 2),
                           PDO = Sh. + Sv.
-                        ) #%>%
-                        #dplyr::rename("SF%_5v5" = "SF_5v5.",
-                         #      "SF%" = "SF.")
+                        ) %>%
+                        dplyr::rename("SF%_5v5" = "SF_5v5.",
+                               "SF%" = "SF.")
                     } else if (input$team_aggregate == "Aggregate Seasons") {
                       data1 <- team_data %>%
                         group_by(Team) %>%
                         summarise_if(is.numeric, sum, na.rm = T) %>%
                         select(-game_id, -Season) %>%
-                        #dplyr::rename("SF_5v5." = "SF%_5v5",
-                        #       "SF." = "SF%") %>%
+                        dplyr::rename("SF_5v5." = "SF%_5v5",
+                               "SF." = "SF%") %>%
                         mutate(
                           SF. = round(SF / (SF + SA), 2),
                           SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
@@ -603,9 +603,9 @@ function(input, output, session) {
                           Sh. = round(GF / SF, 2),
                           Sv. = round(1 - GA / SA, 2),
                           PDO = Sh. + Sv.
-                        )# %>%
-                        #dplyr::rename("SF%_5v5" = "SF_5v5.",
-                        #       "SF%" = "SF.")
+                        ) %>%
+                        dplyr::rename("SF%_5v5" = "SF_5v5.",
+                               "SF%" = "SF.")
                     } else{
                       select(team_data, Season, everything())
                     }
