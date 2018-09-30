@@ -120,6 +120,8 @@ function(input, output, session) {
                     if (input$aggregate != "Game") {
                       new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
                     }
+                    new_data[['Sh%']][which(new_data$Season == 20152016)] <- NA_integer_
+                    new_data$SOG[which(new_data$Season == 20152016)] <- NA_integer_
                     return(new_data)
                   })
   output$gameStats <- renderDataTable({
