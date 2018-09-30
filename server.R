@@ -573,7 +573,7 @@ function(input, output, session) {
                           PDO = Sh. + Sv.
                         ) %>%
                         dplyr::rename("SF%_5v5" = "SF_5v5.",
-                               "SF%" = "SF.")
+                               "SF%" = "SF.", 'SH%'="Sh.", "SV%"="Sv.")
                     } else if (input$team_aggregate == "Aggregate Seasons") {
                       data1 <- team_data %>%
                         group_by(Team) %>%
@@ -605,7 +605,7 @@ function(input, output, session) {
                           PDO = Sh. + Sv.
                         ) %>%
                         dplyr::rename("SF%_5v5" = "SF_5v5.",
-                               "SF%" = "SF.")
+                               "SF%" = "SF.", 'SH%'="Sh.", "SV%"="Sv.")
                     } else{
                       select(team_data, Season, everything())
                     }
