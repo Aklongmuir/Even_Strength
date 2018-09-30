@@ -820,11 +820,11 @@ function(input, output, session) {
       "Season",
       min = min(seasons),
       max = max(seasons),
+
       #changed step
       #Changed: Matt Barlowe 9-29-2018
       step = 10001,
       value = c(min(seasons), max(seasons))
-                
     )
   })
   
