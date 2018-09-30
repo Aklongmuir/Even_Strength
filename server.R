@@ -61,8 +61,8 @@ function(input, output, session) {
                     aggregate_option <- aggregate_option %>%
                       dplyr::rename("Plus" = "eGF",
                              "Minus" = "eGA") %>%
-                      mutate('Sh%' = round(G / SOG, 2)) %>%
-                      select(Player:TO, 'Sh%', SV, GA)# %>%
+                      mutate('Sh%' = round((G / SOG) * 100, 2)) %>%
+                      select(Player:TO, 'Sh%', SV, GA) %>%
                       dplyr::rename("GF." = "GF%")
                     
                     new_data <-
@@ -76,14 +76,14 @@ function(input, output, session) {
                           ) %>%
                           mutate_if(is.numeric, funs(round(. / as.numeric(GP), 2))) %>%
                           mutate(Season = as.numeric(Season),
-                                 'Sh%' = round(G / SOG, 2))
+                                 'Sh%' = round((G / SOG) * 100, 2))
                       } else if (input$pergame == "per Game" &
                                  input$aggregate == "Career") {
                         aggregate_option %>%
                           mutate(GP = as.character(GP),
                                  GF. = as.character(GF.)) %>%
                           mutate_if(is.numeric, funs(round(. / as.numeric(GP), 2))) %>%
-                          mutate('Sh%' = round(G / SOG, 2))
+                          mutate('Sh%' = round((G / SOG) * 100, 2))
                       } else if (input$pergame == "per 60" &
                                  input$aggregate == "Season") {
                         aggregate_option %>%
@@ -100,7 +100,7 @@ function(input, output, session) {
                           mutate(
                             Season = as.numeric(Season),
                             eTOI = as.numeric(eTOI),
-                            'Sh%' = round(G / SOG, 2)
+                            'Sh%' = round((G / SOG) * 100, 2)
                           )
                       } else if (input$pergame == "per 60" &
                                  input$aggregate == "Career") {
@@ -112,7 +112,7 @@ function(input, output, session) {
                           mutate_if(is.numeric, funs(round((
                             . / as.numeric(eTOI)
                           ) * 60, 2))) %>%
-                          mutate('Sh%' = round(G / SOG, 2))
+                          mutate('Sh%' = round((G / SOG) * 100, 2))
                       } else{
                         aggregate_option
                       }
@@ -549,10 +549,10 @@ function(input, output, session) {
                         dplyr::rename("SF_5v5." = "SF%_5v5",
                                "SF." = "SF%") %>%
                         mutate(
-                          SF. = round(SF / (SF + SA), 2),
-                          SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
-                          Sh. = round(GF / SF, 2),
-                          Sv. = round(1 - GA / SA, 2),
+                          SF. = round((SF / (SF + SA)) * 100, 2),
+                          SF_5v5. = round((SF_5v5 / (SF_5v5 + SA_5v5)) * 100, 2),
+                          Sh. = round((GF / SF) * 100, 2),
+                          Sv. = round((1 - GA / SA) * 100, 2),
                           PDO = Sh. + Sv.
                         )
                       data2 <- team_data %>%
@@ -566,11 +566,11 @@ function(input, output, session) {
                                          input$per_game_team == T),
                                   funs(round(. / as.numeric(GP), 2))) %>%
                         mutate(
-                          SF. = round(SF / (SF + SA), 2),
-                          SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
-                          Sh. = round(GF / SF, 2),
-                          Sv. = round(1 - GA / SA, 2),
-                          PDO = Sh. + Sv.
+                            SF. = round((SF / (SF + SA)) * 100, 2),
+                            SF_5v5. = round((SF_5v5 / (SF_5v5 + SA_5v5)) * 100, 2),
+                            Sh. = round((GF / SF) * 100, 2),
+                            Sv. = round((1 - GA / SA) * 100, 2),
+                            PDO = Sh. + Sv.
                         ) %>%
                         dplyr::rename("SF%_5v5" = "SF_5v5.",
                                "SF%" = "SF.", 'SH%'="Sh.", "SV%"="Sv.")
@@ -582,11 +582,11 @@ function(input, output, session) {
                         dplyr::rename("SF_5v5." = "SF%_5v5",
                                "SF." = "SF%") %>%
                         mutate(
-                          SF. = round(SF / (SF + SA), 2),
-                          SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
-                          Sh. = round(GF / SF, 2),
-                          Sv. = round(1 - GA / SA, 2),
-                          PDO = Sh. + Sv.
+                            SF. = round((SF / (SF + SA)) * 100, 2),
+                            SF_5v5. = round((SF_5v5 / (SF_5v5 + SA_5v5)) * 100, 2),
+                            Sh. = round((GF / SF) * 100, 2),
+                            Sv. = round((1 - GA / SA) * 100, 2),
+                            PDO = Sh. + Sv.
                         )
                       data2 <- team_data %>%
                         group_by(Team) %>%
@@ -598,11 +598,11 @@ function(input, output, session) {
                                          input$per_game_team == T),
                                   funs(round(. / as.numeric(GP), 2))) %>%
                         mutate(
-                          SF. = round(SF / (SF + SA), 2),
-                          SF_5v5. = round(SF_5v5 / (SF_5v5 + SA_5v5), 2),
-                          Sh. = round(GF / SF, 2),
-                          Sv. = round(1 - GA / SA, 2),
-                          PDO = Sh. + Sv.
+                            SF. = round((SF / (SF + SA)) * 100, 2),
+                            SF_5v5. = round((SF_5v5 / (SF_5v5 + SA_5v5)) * 100, 2),
+                            Sh. = round((GF / SF) * 100, 2),
+                            Sv. = round((1 - GA / SA) * 100, 2),
+                            PDO = Sh. + Sv.
                         ) %>%
                         dplyr::rename("SF%_5v5" = "SF_5v5.",
                                "SF%" = "SF.", 'SH%'="Sh.", "SV%"="Sv.")
