@@ -120,6 +120,9 @@ function(input, output, session) {
                     if (input$aggregate != "Game") {
                       new_data$eTOI <- ifelse(new_data$Position == "G", 0, new_data$eTOI)
                     }
+                    #removes values of SOG and sh% for the 2016 season because
+                    #SOG were not recorded
+                    #Changed: Matt Barlowe 9-29-2018
                     new_data[['Sh%']][which(new_data$Season == 20152016)] <- NA_integer_
                     new_data$SOG[which(new_data$Season == 20152016)] <- NA_integer_
                     return(new_data)
@@ -817,8 +820,12 @@ function(input, output, session) {
       "Season",
       min = min(seasons),
       max = max(seasons),
-      step = 1,
-      value = c(min(seasons), max(seasons))
+      #removing this allows one to just select year at each endpoint of the slider
+      #not sure if it will work once three seasons are present
+      #Changed: Matt Barlowe 9-29-2018
+      #step = 1,
+      value = unique(seasons)#c(min(seasons), max(seasons))
+                
     )
   })
   
