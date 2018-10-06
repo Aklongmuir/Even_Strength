@@ -3,9 +3,9 @@ library(shinythemes)
 fluidPage(
   theme = shinytheme("paper"),
   tags$head(
+    includeScript("www/google-analytics.js"),
     tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")
   ),
-  tags$script(src = "trackingdata.js"),
   (img(
     src = "ESlogo.png",
     height = 70,
