@@ -3,7 +3,6 @@ library(shinythemes)
 fluidPage(
   theme = shinytheme("paper"),
   tags$head(
-    includeScript("www/google-analytics.js"),
     tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")
   ),
   (img(
@@ -37,8 +36,8 @@ fluidPage(
                  <br> Additionally, we've created a <a href = 'https://www.patreon.com/even_strength'> Patreon Page </a> to help support website/server costs.
                  <br>
                  "
-               ) ),
-              
+               )
+               ),
              h6(HTML(
                "Thanks,<br>Jake, CJ, Matt & Alyssa"
              ))),
