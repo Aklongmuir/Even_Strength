@@ -5,6 +5,7 @@ fluidPage(
   tags$head(
     tags$link(rel = "icon", type = "image/png", href = "EStinylogo.png")
   ),
+  tags$script(src = "trackingdata.js"),
   (img(
     src = "ESlogo.png",
     height = 70,
@@ -36,8 +37,8 @@ fluidPage(
                  <br> Additionally, we've created a <a href = 'https://www.patreon.com/even_strength'> Patreon Page </a> to help support website/server costs.
                  <br>
                  "
-               )
-               ),
+               ) ),
+              
              h6(HTML(
                "Thanks,<br>Jake, CJ, Matt & Alyssa"
              ))),
