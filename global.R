@@ -19,10 +19,12 @@ seasons <- data.frame(
 
 pbp_data <-
   read.csv("data/nwhl_pbp_all.csv", stringsAsFactors = F) %>%
-  mutate(Season = Season * 10000 + Season + 1)
+  mutate(Season = Season * 10000 + Season + 1) %>%
+  select(-X)
 player_data <-
   read.csv("data/nwhl_games_all.csv", stringsAsFactors = F) %>%
-  mutate(Season = Season * 10000 + Season + 1)
+  mutate(Season = Season * 10000 + Season + 1) %>%
+  select(-X)
 roster_data <-
   read.csv("data/rostersall.csv", stringsAsFactors = F) %>%
   mutate(Season = Season * 10000 + Season + 1)
@@ -32,21 +34,14 @@ pointshare_data <-
   mutate(Season = Season * 10000 + Season + 1,
          ixG = round(xG,2)) %>%
   select(-xG)
-print(colnames(pointshare_data))
 
 team_data <-
   read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
-  mutate(Season = Season * 10000 + Season + 1)
+  mutate(Season = Season * 10000 + Season + 1) %>%
+  select(-X)
 toi_data <-
   read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
   mutate(Season = Season * 10000 + Season + 1)
-# xg_data <-
-#   read.csv("data/NWHLxG.csv", stringsAsFactors = F) %>%
-  # mutate(Season = as.character(season * 10000 + season + 1),
-  #        ixG = round(xG, 2)) %>%
-  # select(-season,-Goals, -Difference, -xG) %>%
-  # rename(Player = event_player_1,
-  #        Team = event_team)
 
 toi_data$eTOI <- round(toi_data$eTOI)
 

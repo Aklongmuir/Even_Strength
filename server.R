@@ -195,7 +195,7 @@ function(input, output, session) {
                       summarise_if(is.numeric, sum, na.rm = T) %>%
                       mutate(GF. = ifelse((eGF + eGA) > 0, round(eGF / (eGF + eGA), 2), NA_integer_)) %>%
                       select(Player, Position, Team, Season, PrPTS, G, A1, A2, GP) %>%
-                      filter(GP > input$GP_filter) %>%
+                      filter(GP >= input$GP_filter) %>%
                       mutate_if(funs(is.numeric(.) &
                                        input$leader_pergame == T), funs(round(. / GP, 2))) %>%
                       arrange(desc(PrPTS)) %>%
