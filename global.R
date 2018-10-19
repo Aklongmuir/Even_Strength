@@ -4,11 +4,8 @@ library(ggplot2)
 library(reshape2)
 library(DT)
 library(XML)
-library(RCurl)
-
+#library(RCurl)
 source("RinkFunction.R")
-
-#https://shiny.rstudio.com/articles/pool-dplyr.html
 
 seasons <- data.frame(
   id = c("512423", "407749", "327125", "327151"),
@@ -34,6 +31,13 @@ pointshare_data <-
   mutate(Season = Season * 10000 + Season + 1,
          ixG = round(xG,2)) %>%
   select(-xG)
+betweenness_data <-
+  read.csv("data/betweenness_data.csv", stringsAsFactors = F) %>%
+  mutate_if(is.numeric, funs(round(.,2))) %>%
+  mutate(Season = as.numeric(substr(Season,1,4)),
+         Season = Season*10000 + Season + 1)
+pointshare_data <- left_join(pointshare_data, betweenness_data, by = c("Player","Team","Season"))
+
 
 team_data <-
   read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
