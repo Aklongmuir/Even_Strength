@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1539476437597.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "9B7EEBF6",
+    "lastKnownWriteTime" : 1539985160,
+    "last_content_update" : 1539985160,
+    "path" : "~/Documents/GitHub/shiny-server/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+        "cursorPosition" : "707,19",
+        "scrollLine" : "706"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
