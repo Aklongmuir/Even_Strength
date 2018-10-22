@@ -4,7 +4,7 @@ library(ggplot2)
 library(reshape2)
 library(DT)
 library(XML)
-#library(RCurl)
+library(RCurl)
 source("RinkFunction.R")
 
 seasons <- data.frame(
