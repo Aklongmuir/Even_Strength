@@ -7,13 +7,13 @@
     "folds" : "",
     "hash" : "0",
     "id" : "9B7EEBF6",
-    "lastKnownWriteTime" : 1539985160,
-    "last_content_update" : 1539985160,
+    "lastKnownWriteTime" : 1542523281,
+    "last_content_update" : 1542523281,
     "path" : "~/Documents/GitHub/shiny-server/server.R",
     "project_path" : "server.R",
     "properties" : {
-        "cursorPosition" : "707,19",
-        "scrollLine" : "706"
+        "cursorPosition" : "709,14",
+        "scrollLine" : "703"
     },
     "relative_order" : 1,
     "source_on_save" : false,

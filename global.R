@@ -16,21 +16,32 @@ seasons <- data.frame(
 
 pbp_data <-
   read.csv("data/nwhl_pbp_all.csv", stringsAsFactors = F) %>%
-  mutate(Season = Season * 10000 + Season + 1) %>%
-  select(-X)
+  mutate(Season = Season * 10000 + Season + 1) #%>%
+ # select(-X)
+new_pbp_data <-
+  read.csv("data/nwhl_pbp_1819.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season * 10000 + Season + 1)
+pbp_data <- bind_rows(new_pbp_data, pbp_data)
+
 player_data <-
   read.csv("data/nwhl_games_all.csv", stringsAsFactors = F) %>%
-  mutate(Season = Season * 10000 + Season + 1) %>%
-  select(-X)
+  mutate(Season = Season * 10000 + Season + 1) #%>%
+ # select(-X)
+new_player_data <- read.csv("data/playergames1819.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season * 10000 + Season + 1)
+player_data <- bind_rows(new_player_data, player_data)
+
 roster_data <-
   read.csv("data/rostersall.csv", stringsAsFactors = F) %>%
   mutate(Season = Season * 10000 + Season + 1)
+
 pointshare_data <-
   read.csv("data/advancedstats.csv", stringsAsFactors = F) %>% 
   dplyr::rename("Pos" = "position") %>%
   mutate(Season = Season * 10000 + Season + 1,
          ixG = round(xG,2)) %>%
   select(-xG)
+
 betweenness_data <-
   read.csv("data/betweenness_data.csv", stringsAsFactors = F) %>%
   mutate_if(is.numeric, funs(round(.,2))) %>%
@@ -41,8 +52,13 @@ pointshare_data <- left_join(pointshare_data, betweenness_data, by = c("Player",
 
 team_data <-
   read.csv("data/nwhl_team_games_all.csv", stringsAsFactors = F) %>%
-  mutate(Season = Season * 10000 + Season + 1) %>%
-  select(-X)
+  mutate(Season = Season * 10000 + Season + 1)# %>%
+  #select(-X)
+new_team_data <- read.csv("data/teamgames1819.csv", stringsAsFactors = F) %>%
+  mutate(Season = Season * 10000 + Season + 1)
+team_data <- bind_rows(new_team_data, team_data)
+
+
 toi_data <-
   read.csv("data/eTOI.csv", stringsAsFactors = F) %>%
   mutate(Season = Season * 10000 + Season + 1)

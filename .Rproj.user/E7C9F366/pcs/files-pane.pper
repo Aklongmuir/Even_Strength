@@ -1,0 +1,9 @@
+{
+    "path" : "~/Documents/GitHub/shiny-server/data",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

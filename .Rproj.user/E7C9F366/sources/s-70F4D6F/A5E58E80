@@ -2,18 +2,18 @@
     "collab_server" : "",
     "contents" : "",
     "created" : 1539477364746.000,
-    "dirty" : false,
+    "dirty" : true,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "0",
     "id" : "A5E58E80",
-    "lastKnownWriteTime" : 1539985163,
-    "last_content_update" : 1539985163,
+    "lastKnownWriteTime" : 1544339495,
+    "last_content_update" : 1544339597692,
     "path" : "~/Documents/GitHub/shiny-server/global.R",
     "project_path" : "global.R",
     "properties" : {
-        "cursorPosition" : "19,0",
-        "scrollLine" : "3"
+        "cursorPosition" : "55,3",
+        "scrollLine" : "52"
     },
     "relative_order" : 3,
     "source_on_save" : false,
