@@ -6,10 +6,10 @@
 #2) Get relevant game ids
 
 # Option 1- Pulls game ids for current date
-  curDate <- strsplit(as.character(Sys.Date()), split = "-")[[1]]
-  pbp_ids <- day_scrape(Season = 20182019, Year = curDate[1], Month = curDate[2], Day = curDate[3])
+  #curDate <- strsplit(as.character(Sys.Date()), split = "-")[[1]]
+  #pbp_ids <- day_scrape(Season = 20182019, Year = curDate[1], Month = curDate[2], Day = curDate[3])
 # Option 2- Pulls game ids for custom date
-  #pbp_ids <- day_scrape(Season = 20182019, Year = 2018, Month = 09, Day = 29)
+  pbp_ids <- day_scrape(Season = 20182019, Year = 2018, Month = 12, Day = 1)
   
 #3) Get pbp data
   pbp_full <- compile_games(pbp_ids)
