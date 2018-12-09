@@ -5,6 +5,7 @@
 #Load Packages
 library(rjson)
 library(tidyverse)
+library(stringr)
 
 #Season IDs
 seasons <- data.frame(id = c("512423","407749","327125","327151"), 
@@ -724,3 +725,31 @@ compile_team_summary <- function(pbp_df){
   return(team_games)
 }
 
+##############
+#RUNNING THE SCRAPER EXAMPLES
+
+# Get season ids
+pbp_ids <- schedule_scrape(Season = "20182019")
+
+#Individual Games
+#pbp_df <- complete_game_scrape(18507502)
+#pbp_gamesummary <- game_summary(pbp_df)
+#pbp_teamsummary <- game_team_summary(pbp_df)
+
+#Multiple games
+pbp_full <- compile_games(pbp_ids)
+#This takes about 45s-1min to run
+pbp_full_summary <- compile_player_summary(pbp_full)
+pbp_full_team_summary <- compile_team_summary(pbp_full)
+
+write_csv(pbp_full, "data/nwhl_pbp_1819.csv")
+write_csv(pbp_full_summary, "data/playergames1819.csv")
+write_csv(pbp_full_team_summary, "data/teamgames1819.csv")
+
+roster_data <- lapply(pbp_ids, roster_info)
+roster_data <- roster_data[which(!is.na(roster_data))]
+roster_data <- do.call("bind_rows", roster_data)
+roster_data <- roster_data %>%
+  filter(status == "active", roster_type == "player") %>%
+  distinct(id, .keep_all = T)
+write_csv(roster_data, "data/rosterdata.csv")
