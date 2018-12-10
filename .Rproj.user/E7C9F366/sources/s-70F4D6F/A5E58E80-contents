@@ -163,6 +163,6 @@ standardize <- function(x) {
   x <- as.numeric(x)
   y <- rank(x) / length(x)
 }
-
+#
 # player_data <- dplyr::rename(player_data, "GF%" = "GF.")
 # team_data <- dplyr::rename(team_data, "SF%" = "SF.", "SF%_5v5" =  "SF_5v5.")
