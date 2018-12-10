@@ -753,3 +753,6 @@ roster_data <- roster_data %>%
   filter(status == "active", roster_type == "player") %>%
   distinct(id, .keep_all = T)
 write_csv(roster_data, "data/rosterdata.csv")
+
+# UPDATE FUNCTION 
+
