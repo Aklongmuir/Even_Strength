@@ -1,21 +1,21 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1539476437597.000,
+    "created" : 1544435060423.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "0",
-    "id" : "9B7EEBF6",
+    "id" : "A6B4C7A1",
     "lastKnownWriteTime" : 1542523281,
     "last_content_update" : 1542523281,
-    "path" : "~/Documents/GitHub/shiny-server/server.R",
-    "project_path" : "server.R",
+    "path" : "~/Documents/GitHub/shiny-server/UI.R",
+    "project_path" : "UI.R",
     "properties" : {
-        "cursorPosition" : "709,14",
-        "scrollLine" : "703"
+        "cursorPosition" : "164,0",
+        "scrollLine" : "0"
     },
-    "relative_order" : 1,
+    "relative_order" : 4,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_source"

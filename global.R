@@ -32,7 +32,7 @@ new_player_data <- read.csv("data/playergames1819.csv", stringsAsFactors = F) %>
 player_data <- bind_rows(new_player_data, player_data)
 
 roster_data <-
-  read.csv("data/rostersall.csv", stringsAsFactors = F) %>%
+  read.csv("data/rosterdata.csv", stringsAsFactors = F) %>%
   mutate(Season = Season * 10000 + Season + 1)
 
 pointshare_data <-

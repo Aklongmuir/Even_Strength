@@ -1,4 +1,9 @@
-
+library(readr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(pROC)
+library(googlesheets)
 xgpbp <-  read_csv("data/nwhl_pbp_all.csv")
 
 
@@ -71,13 +76,14 @@ Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(is_goal))
 
 #CHOOCHOOTRAINTHEMODEL
 xGmodel <-glm (is_goal ~ poly(event_distance, 3, raw = TRUE) +
-                 poly(event_angle, 3, raw = TRUE) + is_rebound
+                 poly(event_angle, 3, raw = TRUE) + is_rebound +
                data = Train_Fenwick_Data,
-               family = binomial(link = 'logit'))
+               family = binomial(link = 'logit')
 
 save(xGmodel, file = "xGmodelver2.rda")
 
-testdata <- pbp_full
+
+testdata <- read_csv("data/nwhl_pbp_1819.csv")
 xGtestData<- filter(testdata, event_type %in% c("Shot", "Goal"))
 
 #doing all of the hocus pocus to the test data

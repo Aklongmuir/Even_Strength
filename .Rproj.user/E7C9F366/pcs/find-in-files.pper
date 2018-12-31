@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~/Documents/GitHub/shiny-server",
+        "query" : "is_character",
+        "regex" : false
+    }
+}
