@@ -4,8 +4,8 @@ library(magrittr)
 library(ggplot2)
 library(pROC)
 library(googlesheets)
-pbp_data <- bind_rows(pbp_1516,pbp_1617,pbp_1718)
-xgpbp <-  pbp_data
+xgpbp <-  read_csv("data/nwhl_pbp_all.csv")
+
 
 Train_PbP_Data <- xgpbp
 #whats a fenwick
@@ -67,7 +67,7 @@ Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(event_player_1))
 Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(is_rebound))
 #head(Train_Fenwick_Data[Train_Fenwick_Data$is_rebound == 'NA',])
 
-#Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(is_rush))
+Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(is_rush))
 #head(Train_Fenwick_Data[Train_Fenwick_Data$is_rush == 'NA',])
 
 Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(is_goal))
@@ -75,15 +75,15 @@ Train_Fenwick_Data <- filter(Train_Fenwick_Data, !is.na(is_goal))
 
 
 #CHOOCHOOTRAINTHEMODEL
-xGmodel <- glm(is_goal ~ poly(event_distance, 3, raw = TRUE) + 
-                       poly(event_angle, 3, raw = TRUE) + is_rebound, 
-                              data = Train_Fenwick_Data, 
-                              family = binomial(link = 'logit'))
+xGmodel <-glm (is_goal ~ poly(event_distance, 3, raw = TRUE) +
+                 poly(event_angle, 3, raw = TRUE) + is_rebound +
+               data = Train_Fenwick_Data,
+               family = binomial(link = 'logit')
 
 save(xGmodel, file = "xGmodelver2.rda")
 
 
-testdata <- pbp_1819
+testdata <- read_csv("data/nwhl_pbp_1819.csv")
 xGtestData<- filter(testdata, event_type %in% c("Shot", "Goal"))
 
 #doing all of the hocus pocus to the test data
@@ -129,7 +129,7 @@ xGtestData <- filter(xGtestData, !is.na(event_player_1))
 xGtestData <- filter(xGtestData, !is.na(is_rebound))
 #head(xGtestData[xGtestData$is_rebound == 'NA',])
 
-#xGtestData <- filter(xGtestData, !is.na(is_rush))
+xGtestData <- filter(xGtestData, !is.na(is_rush))
 #head(xGtestData[xGtestData$is_rush == 'NA',])
 
 xGtestData <- filter(xGtestData, !is.na(is_goal))
@@ -183,9 +183,3 @@ xg_game_player <- xGtestData %>%
 arrange(xg_game_player, desc(xG))
 
 #test
-
-trial <- pbp_full %>% group_by(event_player_1, event_team, event_type == "Shot") %>%
- group_by(event_player_1, event_team) %>%
- summarise(Distance = mean(event_distance))
-
-write_csv(xGtestData, "nwhl_xgpbp_1819.csv")
