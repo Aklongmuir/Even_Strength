@@ -1,0 +1,58 @@
+## Let goal_data be a data frame with (at least) columns "goal", "primary_assist", "secondary_assist", and "team"
+
+library(tidyverse)
+library(ggfittext)
+library(ggalluvial)
+library(extrafont)
+
+## The theme for the chart
+theme_awesome <- function(font) {
+  
+  theme_minimal(base_family = font) +
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 50, margin = margin(1, 3, 20, 3)),
+          axis.title = element_text(face = "bold", size = 36),
+          axis.text = element_text(face = "bold", size = 27),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          plot.margin = margin(25, 15, 25, 15),
+          legend.title = element_text(face = "bold", size = 30),
+          legend.title.align = 0,
+          legend.text = element_text(face = "bold", size = 30, margin = margin(1, 1, 1, 10)),
+          legend.key.size = unit(1, "cm"),
+          legend.margin = margin(0, 30, 30, 20),
+          axis.line = element_blank(),
+          axis.ticks.length = unit(0.7, "cm"),
+          panel.grid.major.x = element_blank(),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.spacing = unit(1.5, "lines"),
+          strip.text = element_text(face = "bold", size = 25, margin = margin(0, 0, 10, 0)),
+          strip.background = element_rect(fill = "white", color = "black"),
+          plot.caption = element_text(size = 25, face = "bold", hjust = 0.95),
+          plot.subtitle = element_text(size = 32, face = "bold", margin = margin(0, 0, 30, 0)))
+  
+}
+
+## The Chart
+goal_data %>% 
+  filter(team == "SJS") %>% 
+  filter(secondary_assist == "Jonathan Cheechoo" | primary_assist == "Jonathan Cheechoo" | goal == "Jonathan Cheechoo") %>%
+  select(goal, primary_assist, secondary_assist) %>%
+  mutate(primary_assist = ifelse(is.na(primary_assist), goal, primary_assist)) %>%
+  mutate(secondary_assist = ifelse(is.na(secondary_assist), primary_assist, secondary_assist)) %>%
+  group_by(goal, primary_assist, secondary_assist) %>%
+  summarize(frequency = n()) %>%
+  ungroup() %>%
+  mutate(id = row_number()) %>%
+  gather(key, value, -c(frequency, id)) %>%
+  mutate(key = case_when(key == "secondary_assist" ~ "Secondary Assist", key == "primary_assist" ~ "Primary Assist", key == "goal" ~ "Goal")) %>%
+  ggplot(aes(y = frequency, x = factor(key, levels = c("Secondary Assist", "Primary Assist", "Goal")), fill = value, stratum = value, alluvium = id, label = value)) +
+  scale_x_discrete(expand = c(.1, 0)) +
+  guides(fill = FALSE) +
+  geom_flow(width = 1/4) +
+  geom_stratum(alpha = .5, width = 1/4) +
+  ggfittext::geom_fit_text(stat = "stratum", width = 1/4, min.size = 19, family = "Tw Cen MT Condensed", size = 20) +
+  theme_awesome(font = "Tw Cen MT Condensed") +
+  theme(axis.text.y = element_blank()) +
+  labs(title = "Who did Jonathan Cheechoo Get Points with for the Sharks in 2005-06?") +   
+  ggsave("jonathan_cheechoo.png", dpi = 330, height = (2.72 * 4), width = (4.17 * 4))
